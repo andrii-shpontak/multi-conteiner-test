@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  server1:
+    build: .
+    image: server
+    environment:
+      NODE_ENV: production
+    ports:
+      - '3001:8008'
+    restart: always
+    volumes:
+      - /home/dev/data/server1:/usr/src/app/data
+
+  server2:
+    image: server
+    environment:
+      NODE_ENV: production
+    ports:
+      - '3002:8008'
+    restart: always
+    volumes:
+      - /home/dev/data/server2:/usr/src/app/data
+    depends_on:
+      - server1
+
+  server3:
+    image: server
+    environment:
+      NODE_ENV: production
+    ports:
+      - '3003:8008'
+    restart: always
+    volumes:
+      - /home/dev/data/server3:/usr/src/app/data
+    depends_on:
+      - server1
